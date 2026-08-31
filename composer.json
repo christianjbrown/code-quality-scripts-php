@@ -14,7 +14,7 @@
         "ext-mbstring": "*",
         "ext-xdebug": "*",
         "friendsofphp/php-cs-fixer": "^3.74",
-        "squizlabs/php_codesniffer": "^4.0.1",
+        "squizlabs/php_codesniffer": "^4.0.2",
         "slevomat/coding-standard": "^8.30",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.2.1"
     },
