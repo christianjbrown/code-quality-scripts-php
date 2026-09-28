@@ -41,7 +41,8 @@ install to the consumer's `bin/`). `api-client` is the reference consumer.
   config scripts that `return` a `PhpCsFixer\Config`; each carries a
   `// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace` header for that reason. Rulesets
   can be regenerated at https://mlocati.github.io/php-cs-fixer-configurator/.
-- **`src/`** — the four bash wrappers, declared as `bin` in `composer.json`:
+- **`src/`** — the four bash wrappers and the `php-coverage-check` PHP script, declared as `bin` in
+  `composer.json`:
   - `php-cs` — phpcs with the `ChristianBrown` standard.
   - `php-cs-diff` — phpcs on git-changed + untracked files only.
   - `php-cs-fix` — php-cs-fixer (defaults to the **Risky** ruleset) **then `phpcbf`** with the
@@ -51,6 +52,13 @@ install to the consumer's `bin/`). `api-client` is the reference consumer.
     only >= 4 (fixer conflict / process error) fails the run.
   - `php-cs-fix-diff` — same two-tool pass on the git diff: **Risky** on new/untracked files,
     **Safe** on existing (modified/renamed) files, followed by `phpcbf` per file.
+  - `php-coverage-check` — reads a PHPUnit `--coverage-text` report and exits 1 if any summary
+    metric is under the floor (default 100). It only wires `src/Coverage/` together; the parsing
+    and the threshold logic live there, and `tests/CoverageCheckSmokeTest.php` runs the script
+    end to end.
+- **`src/Coverage/`** — PSR-4 `ChristianBrown\CodeQualityScripts\Coverage\`: `SummaryParser`
+  turns the report into `Metric`s, `ThresholdChecker` lists the ones under the floor. Loops are
+  written as `array_map`/`array_filter` so every path Xdebug counts is reachable.
 - **`src/PhpStan/`** — the one PHP source dir (PSR-4 `ChristianBrown\CodeQualityScripts\PhpStan\` →
   `src/PhpStan/`), holding the PHPStan rule. It is in the phpcs, phpstan and coverage paths and is
   held to 100% path coverage like everything else.

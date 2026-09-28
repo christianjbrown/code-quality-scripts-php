@@ -26,10 +26,12 @@
         "src/php-cs",
         "src/php-cs-diff",
         "src/php-cs-fix",
-        "src/php-cs-fix-diff"
+        "src/php-cs-fix-diff",
+        "src/php-coverage-check"
     ],
     "autoload": {
         "psr-4": {
+            "ChristianBrown\\CodeQualityScripts\\Coverage\\": "src/Coverage/",
             "ChristianBrown\\CodeQualityScripts\\PhpStan\\": "src/PhpStan/"
         }
     },
@@ -46,13 +48,13 @@
             "clear && ./bin/phpstan analyse"
         ],
         "check-style": [
-            "clear && ./src/php-cs ./config ./src/PhpStan ./tests"
+            "clear && ./src/php-cs ./config ./src/Coverage ./src/PhpStan ./tests"
         ],
         "check-style-diff": [
             "clear && ./src/php-cs-diff"
         ],
         "fix-style": [
-            "clear && ./src/php-cs-fix ./config ./src/PhpStan ./tests"
+            "clear && ./src/php-cs-fix ./config ./src/Coverage ./src/PhpStan ./tests"
         ],
         "fix-style-diff": [
             "clear && ./src/php-cs-fix-diff"

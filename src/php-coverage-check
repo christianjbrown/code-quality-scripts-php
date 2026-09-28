@@ -1,0 +1,40 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+// Fails the build when any metric in a PHPUnit --coverage-text report is under the floor.
+// Usage: php-coverage-check <report-file> [minimum-percent, default 100]
+
+use ChristianBrown\CodeQualityScripts\Coverage\SummaryParser;
+use ChristianBrown\CodeQualityScripts\Coverage\ThresholdChecker;
+
+require $GLOBALS['_composer_autoload_path'] ?? __DIR__.'/../vendor/autoload.php';
+
+$reportFile = $argv[1] ?? '';
+$minimumPercent = (float) ($argv[2] ?? 100);
+
+$report = '' === $reportFile ? false : @file_get_contents($reportFile);
+if (false === $report) {
+    fwrite(STDERR, "Coverage report '{$reportFile}' not found or unreadable.\n");
+
+    exit(2);
+}
+
+try {
+    $metrics = (new SummaryParser())->parse($report);
+} catch (UnexpectedValueException $exception) {
+    fwrite(STDERR, $exception->getMessage()."\n");
+
+    exit(2);
+}
+
+$failures = (new ThresholdChecker())->check($metrics, $minimumPercent);
+foreach ($failures as $failure) {
+    fwrite(STDERR, $failure."\n");
+}
+if ([] !== $failures) {
+    exit(1);
+}
+
+echo "Coverage meets the {$minimumPercent}% floor on every metric.\n";
