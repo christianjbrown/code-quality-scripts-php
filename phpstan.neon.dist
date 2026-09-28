@@ -3,6 +3,7 @@ parameters:
     tmpDir: .phpstan.cache
     paths:
         - config
+        - src/Coverage
         - src/PhpStan
         - tests
     excludePaths:

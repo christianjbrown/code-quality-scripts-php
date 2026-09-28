@@ -12,6 +12,7 @@ This project
   * `./src/php-cs-diff` runs PHP Code Sniffer only on files changed according to Git.
   * `./src/php-cs-fix` is a very simple wrapper around PHP-CS-Fixer's own binary, to simplify the command line and load the right ruleset.
   * `./src/php-cs-fix-diff` runs PHP CS Fixer only on files changed according to Git. It runs more risky rules on new files vs existing.
+  * `./src/php-coverage-check` fails the build when any metric in a PHPUnit coverage summary is under a floor (100% by default).
 
 
 
@@ -187,6 +188,19 @@ where
 * `since-ref` , is the git commit reference to compare against, defaults to `HEAD`.
 
 :warning: This will currently default to the **risky** rule set for new files, and **safe** rule set for existing files. See **Setting up global commands** on how to override this.
+
+### Using `php-coverage-check`
+
+```shell
+XDEBUG_MODE=coverage ./bin/phpunit --coverage-text=.phpunit.cache/coverage.txt
+php-coverage-check .phpunit.cache/coverage.txt [minimum-percent]
+```
+
+where
+
+* `minimum-percent` is the floor every summary metric (classes, methods, paths, branches, lines) must reach, defaults to `100`.
+
+It compares the covered and total counts rather than the rounded percentage, so 1999 of 2000 lines fails a 100% floor even though PHPUnit prints it as `100.00%`. It exits `0` when every metric passes, `1` when one is under the floor, and `2` when the report is missing or has no summary. Paths and branches only appear in the summary when PHPUnit runs with `pathCoverage="true"`.
 
 
 
