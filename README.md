@@ -1,6 +1,6 @@
 # PHP Code Quality Scripts
 
-[![CI](https://github.com/christianjbrown/code-quality-scripts-php/actions/workflows/ci.yml/badge.svg)](https://github.com/christianjbrown/code-quality-scripts-php/actions/workflows/ci.yml)
+[![CI](https://github.com/christianjbrown/code-quality-scripts-php/actions/workflows/ci.yml/badge.svg)](https://github.com/christianjbrown/code-quality-scripts-php/actions/workflows/ci.yml) [![Packagist](https://img.shields.io/packagist/v/christianjbrown/code-quality-scripts)](https://packagist.org/packages/christianjbrown/code-quality-scripts)
 
 This project
 
