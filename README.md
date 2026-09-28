@@ -1,6 +1,6 @@
 # PHP Code Quality Scripts
 
-[![CI](https://github.com/christianjbrown/code-quality-scripts-php/actions/workflows/ci.yml/badge.svg)](https://github.com/christianjbrown/code-quality-scripts-php/actions/workflows/ci.yml) [![Packagist](https://img.shields.io/packagist/v/christianjbrown/code-quality-scripts)](https://packagist.org/packages/christianjbrown/code-quality-scripts) [![License](https://img.shields.io/packagist/l/christianjbrown/code-quality-scripts)](https://github.com/christianjbrown/code-quality-scripts-php/blob/main/LICENSE) [![PHP](https://img.shields.io/packagist/dependency-v/christianjbrown/code-quality-scripts/php)](https://packagist.org/packages/christianjbrown/code-quality-scripts)
+[![CI](https://github.com/christianjbrown/code-quality-scripts-php/actions/workflows/ci.yml/badge.svg)](https://github.com/christianjbrown/code-quality-scripts-php/actions/workflows/ci.yml) [![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)](https://github.com/christianjbrown/code-quality-scripts-php/actions/workflows/ci.yml) [![Packagist](https://img.shields.io/packagist/v/christianjbrown/code-quality-scripts)](https://packagist.org/packages/christianjbrown/code-quality-scripts) [![License](https://img.shields.io/packagist/l/christianjbrown/code-quality-scripts)](https://github.com/christianjbrown/code-quality-scripts-php/blob/main/LICENSE) [![PHP](https://img.shields.io/packagist/dependency-v/christianjbrown/code-quality-scripts/php)](https://packagist.org/packages/christianjbrown/code-quality-scripts)
 
 This project
 
