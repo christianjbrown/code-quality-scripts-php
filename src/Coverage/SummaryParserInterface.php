@@ -9,7 +9,7 @@ use UnexpectedValueException;
 interface SummaryParserInterface
 {
     public const string ANSI_ESCAPE_PATTERN = '/\e\[[0-9;]*m/';
-    public const string METRIC_PATTERN = '/^\s*(Classes|Methods|Paths|Branches|Lines):\s+[0-9.]+%\s+\((\d+)\/(\d+)\)/m';
+    public const string METRIC_PATTERN = '/^\s*(Classes|Methods|Paths|Branches|Lines):\s+(?:[0-9.]+%\s+)?\((\d+)\/(\d+)\)/m';
     public const string NO_SUMMARY_MESSAGE = 'No coverage summary found. Is this a PHPUnit --coverage-text report?';
 
     /**

@@ -6,6 +6,13 @@ All notable changes to this package are recorded here. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- `php-coverage-check` now reads a coverage summary for code with nothing to measure. PHPUnit
+  prints such metrics as `(0/0)` with no percentage, which the parser did not recognise, so the
+  check failed with "No coverage summary found" on packages that hold only interfaces and empty
+  classes.
+
 ## [1.1.0] - 2026-09-30
 
 ### Added

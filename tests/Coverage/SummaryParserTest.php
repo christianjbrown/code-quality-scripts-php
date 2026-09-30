@@ -52,6 +52,28 @@ final class SummaryParserTest extends TestCase
         );
     }
 
+    public function testParseReadsMetricsWithNothingToMeasure(): void
+    {
+        $report = "\e[1;37;40m Summary:                \e[0m\n"
+        ."\e[30;42m  Classes:          (0/0)\e[0m\n"
+        ."\e[30;42m  Methods:          (0/0)\e[0m\n"
+        ."\e[30;42m  Lines:            (0/0)\e[0m\n";
+
+        $metrics = (new SummaryParser())->parse($report);
+
+        self::assertSame(
+            [
+                ['Classes', 0, 0],
+                ['Methods', 0, 0],
+                ['Lines', 0, 0],
+            ],
+            array_map(
+                static fn (MetricInterface $metric): array => [$metric->getName(), $metric->getCovered(), $metric->getTotal()],
+                $metrics,
+            ),
+        );
+    }
+
     public function testParseThrowsWithoutASummary(): void
     {
         $this->expectException(UnexpectedValueException::class);
