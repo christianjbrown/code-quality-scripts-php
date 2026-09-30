@@ -8,6 +8,7 @@
   <source restrictNotices="true" restrictWarnings="true" ignoreIndirectDeprecations="true">
     <include>
       <directory>config</directory>
+      <directory>src/Changelog</directory>
       <directory>src/Coverage</directory>
       <directory>src/PhpStan</directory>
     </include>

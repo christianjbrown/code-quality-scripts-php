@@ -3,6 +3,7 @@ parameters:
     tmpDir: .phpstan.cache
     paths:
         - config
+        - src/Changelog
         - src/Coverage
         - src/PhpStan
         - tests
