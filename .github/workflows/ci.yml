@@ -24,8 +24,14 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
+      - name: Check the changelog
+        if: github.event_name == 'pull_request'
+        run: |
+          git fetch --no-tags --depth=1 origin "${{ github.base_ref }}"
+          ./src/php-changelog-check FETCH_HEAD
+
       - name: Check code style
-        run: ./src/php-cs ./config ./src/Coverage ./src/PhpStan ./tests
+        run: ./src/php-cs ./config ./src/Changelog ./src/Coverage ./src/PhpStan ./tests
 
       - name: Static analysis
         run: ./bin/phpstan analyse --no-progress

@@ -13,6 +13,7 @@ This project
   * `./src/php-cs-fix` is a very simple wrapper around PHP-CS-Fixer's own binary, to simplify the command line and load the right ruleset.
   * `./src/php-cs-fix-diff` runs PHP CS Fixer only on files changed according to Git. It runs more risky rules on new files vs existing.
   * `./src/php-coverage-check` fails the build when any metric in a PHPUnit coverage summary is under a floor (100% by default).
+  * `./src/php-changelog-check` fails a pull request that changes `src/` without a `CHANGELOG.md` entry. Repositories without a `CHANGELOG.md` are skipped.
 
 
 
@@ -188,6 +189,27 @@ where
 * `since-ref` , is the git commit reference to compare against, defaults to `HEAD`.
 
 :warning: This will currently default to the **risky** rule set for new files, and **safe** rule set for existing files. See **Setting up global commands** on how to override this.
+
+### Using `php-changelog-check`
+
+Run it on pull requests, from the repository root, against the branch being merged into:
+
+```shell
+git fetch --no-tags --depth=1 origin main
+php-changelog-check FETCH_HEAD
+```
+
+It fails (exit `1`) when the pull request changes anything under `src/` without also changing `CHANGELOG.md`, or when `CHANGELOG.md` no longer has a `## [Unreleased]` heading. A repository with no `CHANGELOG.md` is skipped (exit `0`). Exit `2` means no base ref was given or git could not diff against it. The changelog is expected to follow [Keep a Changelog](https://keepachangelog.com/en/1.1.0/): each change adds a line under `## [Unreleased]`, and a release renames that section to the version.
+
+In GitHub Actions:
+
+```yaml
+      - name: Check the changelog
+        if: github.event_name == 'pull_request'
+        run: |
+          git fetch --no-tags --depth=1 origin "${{ github.base_ref }}"
+          ./bin/php-changelog-check FETCH_HEAD
+```
 
 ### Using `php-coverage-check`
 

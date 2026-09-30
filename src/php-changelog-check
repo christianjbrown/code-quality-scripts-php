@@ -1,0 +1,48 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+// Fails a pull request whose changelog is missing or out of step with its code changes.
+// Usage: php-changelog-check <base-ref>, run from the repository root, e.g. origin/main.
+
+use ChristianBrown\CodeQualityScripts\Changelog\ChangelogRuleInterface;
+use ChristianBrown\CodeQualityScripts\Changelog\EntryRule;
+use ChristianBrown\CodeQualityScripts\Changelog\UnreleasedSectionRule;
+
+require $GLOBALS['_composer_autoload_path'] ?? __DIR__.'/../vendor/autoload.php';
+
+$baseRef = $argv[1] ?? '';
+if ('' === $baseRef) {
+    fwrite(STDERR, "Usage: php-changelog-check <base-ref>\n");
+
+    exit(2);
+}
+
+exec('git diff --name-only '.escapeshellarg($baseRef).' HEAD 2>/dev/null', $changedFiles, $gitStatus);
+if (0 !== $gitStatus) {
+    fwrite(STDERR, "Could not diff against '{$baseRef}'. Fetch it first, e.g. git fetch origin main.\n");
+
+    exit(2);
+}
+
+// Only repositories that keep a changelog are held to it.
+if (!is_file(ChangelogRuleInterface::CHANGELOG_FILE)) {
+    echo "No CHANGELOG.md, so there is nothing to check.\n";
+
+    exit(0);
+}
+$changelog = (string) file_get_contents(ChangelogRuleInterface::CHANGELOG_FILE);
+
+$failures = array_values(array_filter(array_map(
+    static fn (ChangelogRuleInterface $rule): ?string => $rule->check(array_values($changedFiles), $changelog),
+    [new EntryRule(), new UnreleasedSectionRule()],
+)));
+foreach ($failures as $failure) {
+    fwrite(STDERR, $failure."\n");
+}
+if ([] !== $failures) {
+    exit(1);
+}
+
+echo "Changelog is in step with the changes.\n";

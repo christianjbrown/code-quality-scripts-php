@@ -56,6 +56,14 @@ install to the consumer's `bin/`). `api-client` is the reference consumer.
     metric is under the floor (default 100). It only wires `src/Coverage/` together; the parsing
     and the threshold logic live there, and `tests/CoverageCheckSmokeTest.php` runs the script
     end to end.
+  - `php-changelog-check` - on a pull request, fails if `src/` changed without a `CHANGELOG.md`
+    change or if `CHANGELOG.md` lost its `## [Unreleased]` heading; skips repositories with no
+    `CHANGELOG.md`. It only wires `src/Changelog/` together (`EntryRule`, `UnreleasedSectionRule`,
+    both `ChangelogRuleInterface`); `tests/ChangelogCheckSmokeTest.php` runs it end to end against
+    throwaway git repositories.
+- **This repository keeps a `CHANGELOG.md`.** A pull request that changes `src/` adds a line under
+  `## [Unreleased]`; CI enforces it with the script above. A release renames that section to the
+  version, and the GitHub release notes are that section.
 - **`src/Coverage/`** — PSR-4 `ChristianBrown\CodeQualityScripts\Coverage\`: `SummaryParser`
   turns the report into `Metric`s, `ThresholdChecker` lists the ones under the floor. Loops are
   written as `array_map`/`array_filter` so every path Xdebug counts is reachable.
