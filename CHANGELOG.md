@@ -6,6 +6,8 @@ All notable changes to this package are recorded here. The format follows
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-10-01
+
 ### Fixed
 
 - `php-coverage-check` now reads a coverage summary for code with nothing to measure. PHPUnit
@@ -34,6 +36,7 @@ First stable release.
 - `php-coverage-check`, which fails the build when any metric in a PHPUnit coverage summary
   (classes, methods, paths, branches, lines) falls below a floor, 100% by default.
 
-[Unreleased]: https://github.com/christianjbrown/code-quality-scripts-php/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/christianjbrown/code-quality-scripts-php/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/christianjbrown/code-quality-scripts-php/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/christianjbrown/code-quality-scripts-php/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/christianjbrown/code-quality-scripts-php/releases/tag/v1.0.0
