@@ -9,6 +9,7 @@
     <include>
       <directory>config</directory>
       <directory>src/Changelog</directory>
+      <directory>src/Console</directory>
       <directory>src/Coverage</directory>
       <directory>src/PhpStan</directory>
     </include>

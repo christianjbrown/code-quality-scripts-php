@@ -40,7 +40,7 @@ jobs:
           ./src/php-changelog-check FETCH_HEAD
 
       - name: Check code style
-        run: ./src/php-cs ./config ./src/Changelog ./src/Coverage ./src/PhpStan ./tests
+        run: ./src/php-cs ./config ./src/Changelog ./src/Console ./src/Coverage ./src/PhpStan ./tests
 
       - name: Static analysis
         run: ./bin/phpstan analyse --no-progress
