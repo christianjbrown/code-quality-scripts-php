@@ -6,6 +6,24 @@ All notable changes to this package are recorded here. The format follows
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-10-01
+
+### Added
+
+- `ChangelogCheck`, `CoverageCheck` and the shared `CheckResult`, `StreamResultReporter` and
+  `FileReader` classes behind `php-changelog-check` and `php-coverage-check`, with
+  `GitChangedFilesProvider` for the changed-file list. The scripts' arguments, output and exit
+  codes are unchanged.
+
+### Changed
+
+- `config/Risky.php` is now built from `config/rules/SafeRules.php` plus
+  `config/rules/RiskyOnlyRules.php`, so each rule lives in one place. The rules both configs apply
+  are identical to before, and the files you include are still `config/Risky.php` and
+  `config/Safe.php`.
+- This package's own PHPStan run now includes `config/phpstan.neon`, so the static private method
+  rule is applied to its code as it is for consumers.
+
 ## [1.1.1] - 2026-10-01
 
 ### Fixed
@@ -36,7 +54,8 @@ First stable release.
 - `php-coverage-check`, which fails the build when any metric in a PHPUnit coverage summary
   (classes, methods, paths, branches, lines) falls below a floor, 100% by default.
 
-[Unreleased]: https://github.com/christianjbrown/code-quality-scripts-php/compare/v1.1.1...HEAD
+[Unreleased]: https://github.com/christianjbrown/code-quality-scripts-php/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/christianjbrown/code-quality-scripts-php/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/christianjbrown/code-quality-scripts-php/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/christianjbrown/code-quality-scripts-php/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/christianjbrown/code-quality-scripts-php/releases/tag/v1.0.0

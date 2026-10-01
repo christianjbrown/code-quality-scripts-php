@@ -1,9 +1,13 @@
+includes:
+    - config/phpstan.neon
+
 parameters:
     level: max
     tmpDir: .phpstan.cache
     paths:
         - config
         - src/Changelog
+        - src/Console
         - src/Coverage
         - src/PhpStan
         - tests

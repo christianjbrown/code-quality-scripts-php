@@ -33,6 +33,7 @@
     "autoload": {
         "psr-4": {
             "ChristianBrown\\CodeQualityScripts\\Changelog\\": "src/Changelog/",
+            "ChristianBrown\\CodeQualityScripts\\Console\\": "src/Console/",
             "ChristianBrown\\CodeQualityScripts\\Coverage\\": "src/Coverage/",
             "ChristianBrown\\CodeQualityScripts\\PhpStan\\": "src/PhpStan/"
         }
@@ -50,13 +51,13 @@
             "clear && ./bin/phpstan analyse"
         ],
         "check-style": [
-            "clear && ./src/php-cs ./config ./src/Changelog ./src/Coverage ./src/PhpStan ./tests"
+            "clear && ./src/php-cs ./config ./src/Changelog ./src/Console ./src/Coverage ./src/PhpStan ./tests"
         ],
         "check-style-diff": [
             "clear && ./src/php-cs-diff"
         ],
         "fix-style": [
-            "clear && ./src/php-cs-fix ./config ./src/Changelog ./src/Coverage ./src/PhpStan ./tests"
+            "clear && ./src/php-cs-fix ./config ./src/Changelog ./src/Console ./src/Coverage ./src/PhpStan ./tests"
         ],
         "fix-style-diff": [
             "clear && ./src/php-cs-fix-diff"
