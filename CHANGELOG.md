@@ -6,6 +6,22 @@ All notable changes to this package are recorded here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- `ChangelogCheck`, `CoverageCheck` and the shared `CheckResult`, `StreamResultReporter` and
+  `FileReader` classes behind `php-changelog-check` and `php-coverage-check`, with
+  `GitChangedFilesProvider` for the changed-file list. The scripts' arguments, output and exit
+  codes are unchanged.
+
+### Changed
+
+- `config/Risky.php` is now built from `config/rules/SafeRules.php` plus
+  `config/rules/RiskyOnlyRules.php`, so each rule lives in one place. The rules both configs apply
+  are identical to before, and the files you include are still `config/Risky.php` and
+  `config/Safe.php`.
+- This package's own PHPStan run now includes `config/phpstan.neon`, so the static private method
+  rule is applied to its code as it is for consumers.
+
 ## [1.1.1] - 2026-10-01
 
 ### Fixed

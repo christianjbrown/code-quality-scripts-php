@@ -53,20 +53,29 @@ install to the consumer's `bin/`). `api-client` is the reference consumer.
   - `php-cs-fix-diff` — same two-tool pass on the git diff: **Risky** on new/untracked files,
     **Safe** on existing (modified/renamed) files, followed by `phpcbf` per file.
   - `php-coverage-check` — reads a PHPUnit `--coverage-text` report and exits 1 if any summary
-    metric is under the floor (default 100). It only wires `src/Coverage/` together; the parsing
-    and the threshold logic live there, and `tests/CoverageCheckSmokeTest.php` runs the script
-    end to end.
+    metric is under the floor (default 100). The script is a composition root: `CoverageCheck` in
+    `src/Coverage/` holds the orchestration (read the report, parse, check, pick the exit code) and
+    returns a `CheckResult`, which `StreamResultReporter` prints. `tests/CoverageCheckSmokeTest.php`
+    runs the script end to end.
   - `php-changelog-check` - on a pull request, fails if `src/` changed without a `CHANGELOG.md`
     change or if `CHANGELOG.md` lost its `## [Unreleased]` heading; skips repositories with no
-    `CHANGELOG.md`. It only wires `src/Changelog/` together (`EntryRule`, `UnreleasedSectionRule`,
-    both `ChangelogRuleInterface`); `tests/ChangelogCheckSmokeTest.php` runs it end to end against
-    throwaway git repositories.
+    `CHANGELOG.md`. The script is a composition root: `ChangelogCheck` in `src/Changelog/` takes
+    the rules (`EntryRule`, `UnreleasedSectionRule`, both `ChangelogRuleInterface`), a
+    `ChangedFilesProviderInterface` (`GitChangedFilesProvider`) and a `FileReaderInterface`, and
+    returns a `CheckResult`, which `StreamResultReporter` prints. `tests/ChangelogCheckSmokeTest.php`
+    runs it end to end against throwaway git repositories.
 - **This repository keeps a `CHANGELOG.md`.** A pull request that changes `src/` adds a line under
   `## [Unreleased]`; CI enforces it with the script above. A release renames that section to the
   version, and the GitHub release notes are that section.
 - **`src/Coverage/`** — PSR-4 `ChristianBrown\CodeQualityScripts\Coverage\`: `SummaryParser`
   turns the report into `Metric`s, `ThresholdChecker` lists the ones under the floor. Loops are
   written as `array_map`/`array_filter` so every path Xdebug counts is reachable.
+- **`src/Console/`** — PSR-4 `ChristianBrown\CodeQualityScripts\Console\`: what both check scripts
+  share. `CheckResult` (exit code plus lines), `StreamResultReporter` (prints it) and `FileReader`.
+- **`config/rules/`** — `SafeRules.php` holds the rule array both fixer configs share and
+  `RiskyOnlyRules.php` what the risky config adds or changes, so each rule lives once.
+  `Risky.php` is `array_merge` of the two. `tests/RulesEquivalenceTest.php` pins the result to
+  fixtures of the old flat arrays.
 - **`src/PhpStan/`** — the one PHP source dir (PSR-4 `ChristianBrown\CodeQualityScripts\PhpStan\` →
   `src/PhpStan/`), holding the PHPStan rule. It is in the phpcs, phpstan and coverage paths and is
   held to 100% path coverage like everything else.
